@@ -1,3 +1,18 @@
+window.onload = function(){
+	loadFunction();
+	enterForSearch();
+}
+
+//Enter to search table.
+function enterForSearch(){
+	document.getElementById("refinement").addEventListener("keydown", function(e){
+		if(e.keyCode == 13){
+			document.getElementById("set").click();
+		}	
+	});
+}
+
+//Construction of tables.
 var global_JSON_Data = ""
 var archive_URL_Text = "[Archive Link]"
 
@@ -16,8 +31,6 @@ var init = false;
 var table_built = false;
 
 var page_load_amount = 1000;
-
-window.onload = loadFunction;
 
 //sets global data in table and count if not set already. First to be called.
 function loadFunction(){
@@ -86,7 +99,10 @@ function addArchiveToJSON(index){
 			break;
 		case "bant": case "vp": case "c":case "con":case "e":case "n":case "news":case "out":case "p":case "toy":case "vip":case "vp":case "w":case "wg":case "wsr":
 			A = "https://archive.nyafuu.org/"  + global_JSON_Data[index]["board"] + "/search/";
-			break
+			break;
+		/*case "c": case "d": case "e":*/ case "i": case: "lgbt": case "t": case "u":
+			A = "https://archive.nyafuu.org/"  + global_JSON_Data[index]["board"] + "/search/";
+			break;
 		default: 
 			A = "https://archived.moe/" + global_JSON_Data[index]["board"] + "/search/";
 		
@@ -228,7 +244,6 @@ function buildEntryCounter(boardRefine){
 	}
 	else{
 		if(current_page - max_page != 0) counter += page_load_amount * (max_page - current_page - 1) + pg1_counter;
-		console.log(page_load_amount  + " " + max_page + " " + (current_page) + " " + pg1_counter + "==" + counter)
 		//current
 		var rhs = Math.floor(counter / 1000) + "";
 		var lhs = counter % 1000 + "";
