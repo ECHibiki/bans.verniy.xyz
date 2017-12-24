@@ -100,8 +100,8 @@ function addArchiveToJSON(index){
 		case "bant": case "vp": case "c":case "con":case "e":case "n":case "news":case "out":case "p":case "toy":case "vip":case "vp":case "w":case "wg":case "wsr":
 			A = "https://archive.nyafuu.org/"  + global_JSON_Data[index]["board"] + "/search/";
 			break;
-		/*case "c": case "d": case "e":*/ case "i": case: "lgbt": case "t": case "u":
-			A = "https://archive.nyafuu.org/"  + global_JSON_Data[index]["board"] + "/search/";
+		/*case "c": case "d": case "e":*/ case "i": case "lgbt": case "t": case "u":
+			A = "https://archive.loveisover.me/"  + global_JSON_Data[index]["board"] + "/search/";
 			break;
 		default: 
 			A = "https://archived.moe/" + global_JSON_Data[index]["board"] + "/search/";
