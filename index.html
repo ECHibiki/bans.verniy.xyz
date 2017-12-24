@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Simple 4Chan Ban Log</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src = "TableFunctions.js"></script>
+		<style rel="stylesheet" type="text/css">
+			body{}
+			table, tbody, tr, td{border-width:1px;border-style:solid;border-color:black;}
+		</style>
+	</head>
+
+	<body>
+		<table class="page_table"></table>
+		<h2>V's Simple 4Chan Ban Log</h2>
+		<p>
+		<label>Insert Board Query</label> <input id="refinement" type="text" /> <input id="set" onclick="constructTable()" type="button" value="Refine" />
+		<span id="count"></span> <input id="refresh" onclick="refreshFunction()" type ="button" value = "Refresh">
+		</p>
+
+		<table id="bansTable">
+			<tbody>
+				<tr>
+					<td>...Loading Entries...</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>Verniy 2017: Last Updated 24/12/2017<br/>
+		Refinement carries accross pages and hashtags for page tracking</p>
+		<table class="page_table"></table>
+	</body>
+</html>
