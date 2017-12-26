@@ -280,8 +280,8 @@ function buildPages(){
 	
 	var page_limit = parseInt(max_page) + 1;
 	var window_width = window.innerWidth;
-
-	
+	var margin = window.getComputedStyle(document.body).margin.replace("px", "");
+console.log(margin);
 	for(var tables = 0; tables < 2 ; tables++){
 		var main_row = document.createElement("TR");
 		page_tables[tables].appendChild(main_row);
@@ -304,7 +304,7 @@ function buildPages(){
 			entry.appendChild(entry_link);
 			main_row.appendChild(entry);		
 			
-			if(page_tables[tables].offsetWidth > window_width){
+			if(page_tables[tables].offsetWidth >=  window_width - margin){
 				main_row.removeChild(entry);
 				main_row = document.createElement("TR");
 				page_tables[tables].appendChild(main_row);
