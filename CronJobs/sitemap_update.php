@@ -11,6 +11,10 @@ function read_string($reader) {
 //ledger files to check
 $ledger_url = "../4Chan_Bans_Log-Ledger.txt";
 $ledger_contents = explode("\n", fread(fopen($ledger_url, "r"), filesize($ledger_url)));
+
+$ledger_contents[2]++;
+$ledger_contents[1]++;
+
 $ledger_string_A = "http://bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-".$ledger_contents[2].".txt";
 $ledger_string_B = "http://bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$ledger_contents[1].txt";
 echo($ledger_string_A  . " " . $ledger_string_B . "<br/>");
@@ -24,11 +28,11 @@ $write_B = true;
 while($xml_reader->read()){
 	if($xml_reader->nodeType == XMLReader::ELEMENT && $xml_reader->name == "loc"){
 		if(strcmp($xml_reader->readString(), $ledger_string_A) == 0){
-			echo "$xml_reader->readString() == $ledger_string_A <br/> AAAA<br/><br/>";
+			echo $xml_reader->readString(). " == $ledger_string_A <br/> AAAA<br/><br/>";
 			$write_A = false;
 		}
 		else if(strcmp($xml_reader->readString(), $ledger_string_B) == 0){
-			echo "$xml_reader->readString() == $ledger_string_B <br/> BBBB<br/><br/>";
+			echo $xml_reader->readString(). " == $ledger_string_B <br/> BBBB<br/><br/>";
 			$write_B = false;
 		}
 	else echo $xml_reader->readString() . " !=  $ledger_string_A &&  !=  $ledger_string_B<br/>";
