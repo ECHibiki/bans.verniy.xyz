@@ -3,17 +3,13 @@
 	<head>
 	<base href = "../">
 	<script src="../Scripts/BrowserDetect.js"></script>
-	<script>
-		window.onload = function(){
-				detectBrowser();
-				setNodeHref(document.getElementById("json_view_id"), "https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en",
-				"https://addons.mozilla.org/en-US/firefox/addon/jsonview/");
-		}
-	</script>
+	<script src="../Scripts/LogListingFunctions.js"></script>
 	</head>
 	<body>
 	<a href = "">Back to Home Page Listings</a>
 	<h1>JSON Page Listings</h1>
 	<p>Please consider using a JSON viewer such as <a id="json_view_id" href="">JSONView</a> to properly read the JSON listings</p>
+	<p id="display_id"> Displaying # results of $ pages from % to ^</p>
+	<ol id="json_listing_id"></ol>
 	</body>
 </html>
