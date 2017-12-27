@@ -273,22 +273,25 @@ function buildEntryCounter(boardRefine){
 
 function buildPages(){
 	var page_tables = document.getElementsByClassName("page_table");
-	while(page_tables[0].hasChildNodes()){
-		page_tables[0].removeChild(page_tables[0].firstChild);
-		page_tables[1].removeChild(page_tables[1].firstChild);
-	}
-	
 	var page_limit = parseInt(max_page) + 1;
 	var window_width = window.innerWidth;
 	var margin = window.getComputedStyle(document.body).margin.replace("px", "");
-console.log(margin);
 	for(var tables = 0; tables < 2 ; tables++){
+		//clear for rebuild
+		while(page_tables[tables].hasChildNodes()){
+			page_tables[tables].removeChild(page_tables[tables].firstChild);
+		}
+
 		var main_row = document.createElement("TR");
+		var top_table = !top_table;
 		page_tables[tables].appendChild(main_row);
 		for(var page = 1; page <=  page_limit; page++){
 			var entry = document.createElement("TD");
 			var entry_link = document.createElement("A");
-			entry_link.innerHTML = "<a href = \"javascript:void(0)\">Page " + page + "</a>";
+			if(top_table)
+				entry_link.innerHTML = "<a href = \"javascript:void(0)\">" + page + "</a>";
+			else 
+				entry_link.innerHTML = "<a href = \"javascript:void(0)\">Page " + page + "</a>";
 			(function (_page){ 
 				entry_link.addEventListener("click", function(){
 					while(table.hasChildNodes()){
@@ -304,7 +307,7 @@ console.log(margin);
 			entry.appendChild(entry_link);
 			main_row.appendChild(entry);		
 			
-			if(page_tables[tables].offsetWidth >=  window_width - margin){
+			if(page_tables[tables].offsetWidth >=  (window_width - margin * 3)){
 				main_row.removeChild(entry);
 				main_row = document.createElement("TR");
 				page_tables[tables].appendChild(main_row);
