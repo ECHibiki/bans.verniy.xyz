@@ -1,39 +1,68 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
-		<title>Simple 4Chan Ban Log - A Guide for the Cynical Troll</title>
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111544917-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-111544917-1');
+		</script>
+
+		<title>Simple 4Chan Ban Log - A Guideline to the Unusual 4chan Poster</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="description" content="Simple logging of 4chan's ban page for both the ban evaders and the innocent alike. Education on how and what 4chan moderators ban">
+		<meta name="description" content="An easy to read log of 4chan's ban page for both the ban evader and the innocent alike. Contains information what 4chan moderators ban.">
 		<meta name="author" content="ECHibiki">
 		<meta name="keywords" content="4chan,bans,logger,shitposter,GR3,ban evasion">
+		<script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "DataCatalog",
+			"url": "bans.verniy.xyz",
+			"name": "Simple 4Chan Ban Log",
+			"description":"An easy to read log of 4chan's ban page for both the ban evaders and the innocent alike. Contains information what 4chan moderators ban.",
+            "measurementTechnique": "Page Logger",       
+            "dataset": [
+				{
+					"url": "bans.verniy.xyz",
+					"sameAs": "bans.verniy.xyz/Logs",
+					"variableMeasured":"Bans",
+					"version": "36",
+					"keywords": "4chan,bans,logger,shitposter,GR3,ban evasion"
+                }
+            ]            
+		}
+		</script>
 		<script type="text/javascript" src = "TableFunctions.js"></script>
 		<style rel="stylesheet" type="text/css">
 			body{margin:8px;}
 			table, tbody, tr, td{border-width:1px;border-style:solid;border-color:black;}
 		</style>
 	</head>
-
 	<body>
 		<table class="page_table"></table>
-		<h2>V's Simple 4Chan Ban Log</h2>
-		<p>
-		<label>Insert Board Query</label> <input id="refinement" type="text" /> <input id="set" onclick="constructTable()" type="button" value="Refine" />
-		<span id="count"></span> <input id="refresh" onclick="refreshFunction()" type ="button" value = "Refresh">
-		</p>
-
-		<table id="bansTable">
-			<tbody>
-				<tr>
-					<td>...Loading Entries...</td>
-				</tr>
-			</tbody>
-		</table>
-		<br/><a href = "/Logs">View Page Directory</a>
-		<p>Verniy 2017: Last Updated 26/12/2017<br/>
-		Multirow pages<br/>
-		Inquiries to be sent to the gmail account of ECVerniy</p>
-		
+		<span>
+			<h2>V's Simple 4Chan Ban Log</h2>
+			<p>
+				<label>Insert Board Query</label> <input id="refinement" type="text" /> <input id="set" onclick="constructTable()" type="button" value="Refine" />
+				<span id="count"></span> <input id="refresh" onclick="refreshFunction()" type ="button" value = "Refresh">
+			</p>
+			<table id="bansTable">
+				<tbody>
+					<tr>
+						<td>...Loading Entries...</td>
+					</tr>
+				</tbody>
+			</table>
+			<br/><a href = "/Logs" itemprop="">View Page Directory</a>
+			<p>
+				Verniy 2017: Last Updated 26/12/2017<br/>
+				Multirow pages & Google Metadata/search analytics<br/>
+				Inquiries to be sent to the gmail account of ECVerniy
+			</p>
+		</span>
 		<table class="page_table"></table>
 	</body>
 </html>
