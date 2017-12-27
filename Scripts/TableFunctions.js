@@ -83,29 +83,38 @@ function refreshFunction(){
 }
 	
 function addArchiveToJSON(index){
+	/**
+	Thanks to http://archive.nyafuu.org/ : c / e / n / news / out / p / toy / vip/ vp / w / wg / wsr 
+	Thanks to http://4plebs.org/ : adv / hr / o / pol / s4s / sp / trv / tv / x 
+	Thanks to http://desuarchive.org : a / aco / an / co / d / fit / gif / his / int / k / m / mlp / qa / r9k / tg / trash / vr / wsg 
+	Thanks to http://archive.loveisover.me : i / lgbt / t / u 
+	Thanks to https://boards.fireden.net : cm / ic / sci / v / vg / y 
+	Thanks to http://archiveofsins.com/ : h / hc / hm / r / s / soc 
+	Thanks to http://thebarchive.com : b / bant 
+	Thanks to https://rbt.asia : cgl / g / mu 
+	*/
 	var A = "";
 	switch(global_JSON_Data[index]["board"]){
-		case "a": case "cm": case "co":case "ic":case "sci":case "tg":case "v":case "vg":case "vip":case "y": 
+		case "a": case "cm": case "co":case "ic":case "sci":case "tg":case "v":case "vg":case "y": 
 			A = "https://boards.fireden.net/" + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		case "adv": case "f": case "hr":case "o":case "pol":case "s4s":case "sp":case "tg":case "trv":case "tv": case "x":
 			A = "https://archive.4plebs.org/" + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		case "aco": case "an": case "c":case "d":case "fit":case "gif":case "his":case "int":case "k":case "m": case "mlp": case "qa":case "r9k":case "trash":case "vr":case "wsg":
 			A = "https://desuarchive.org/" + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		case "mu": case "cgl": case "g":
 			A = "https://rbt.asia/" + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		case "bant": case "vp": case "c":case "con":case "e":case "n":case "news":case "out":case "p":case "toy":case "vip":case "vp":case "w":case "wg":case "wsr":
 			A = "https://archive.nyafuu.org/"  + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		/*case "c": case "d": case "e":*/ case "i": case "lgbt": case "t": case "u":
 			A = "https://archive.loveisover.me/"  + global_JSON_Data[index]["board"] + "/search/";
-			break;
+		break;
 		default: 
-			A = "https://archived.moe/" + global_JSON_Data[index]["board"] + "/search/";
-		
+			A = "https://archived.moe/" + global_JSON_Data[index]["board"] + "/search/";		
 	}
 	var B = "";
 	var comment = global_JSON_Data[index]["com"] + "";
