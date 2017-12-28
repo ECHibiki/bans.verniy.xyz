@@ -11,6 +11,7 @@ function read_string($reader) {
 //ledger files to check
 $ledger_url = "../4Chan_Bans_Log-Ledger.txt";
 $ledger_contents = explode("\n", fread(fopen($ledger_url, "r"), filesize($ledger_url)));
+$ledger_contents[2] = $ledger_contents[1] - 1;
 
 $ledger_string_A = "http://bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-".$ledger_contents[2].".txt";
 $ledger_string_B = "http://bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$ledger_contents[1].txt";

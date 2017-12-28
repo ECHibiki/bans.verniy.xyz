@@ -10,12 +10,12 @@ function detectBrowser(){
 	}
 }
 
-function setNodeHref(node, href_c, href_ff){
+function setNodeHref(node, href_c, href_ff, href_def){
 	if(is_ff){
 		node.href = href_ff;
 	}
 	else if(is_chrome){
 		node.href = href_c;
 	}
-	else node.href = href_ff;
+	else node.href = href_def;
 }

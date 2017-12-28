@@ -120,8 +120,6 @@ for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	$leger_data = fopen("/home4/ecorvid/bans.verniy.xyz/4Chan_Bans_Log-Ledger.txt", "w");
 	//update Total
 	fwrite($leger_data, $all_ledger_data[0] + $new_entries . "\n");
-	while($page_one_file >= 0){
-		fwrite($leger_data, $page_one_file-- . "\n");
-	}
+	fwrite($leger_data, $page_one_file . "\n");
 	fclose($logFile);
 ?>

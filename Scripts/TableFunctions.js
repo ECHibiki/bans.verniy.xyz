@@ -1,8 +1,3 @@
-window.onload = function(){
-	loadFunction();
-	enterForSearch();
-}
-
 //Enter to search table.
 function enterForSearch(){
 	document.getElementById("refinement").addEventListener("keydown", function(e){
@@ -39,42 +34,44 @@ function loadFunction(){
 	else window.location.hash = '#' + 1;
 	//load ledger data
 	var xhttp_ledger = new XMLHttpRequest();
-	xhttp_ledger.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var all_data = this.responseText.split("\n");
-			//read the total entries in file
-			max_counter = all_data[0];
-			//set the first file which is also the highest numbered.
-			if(!init) {current_page = max_page = all_data[1]}
-			else {current_page = current_page}
-			//load the log data
-			var xhttp_log = new XMLHttpRequest();
-			xhttp_log.onreadystatechange = function(){		
-				table = document.getElementById("bansTable");
-				count = document.getElementById("count");
-				if (this.readyState == 4 && this.status == 200) {
-					while(table.hasChildNodes()) table.removeChild(table.lastChild);
-
-					global_JSON_Data = this.responseText;
-					global_JSON_Data = global_JSON_Data.split("\n");
-					constructTable();
-					buildPages();
-					
-					init = true;
-				}
-				else if(this.readyState == 4 && this.status != 200){				
-					table.innerHTML = "<tr><td>Page Load Error. Try Changing Pages</td></tr>";
-				}
-			}
-			xhttp_log.open("GET", "Logs/4Chan_Bans_Log-Reverse_Chrono-" + current_page + ".txt", true);
-			xhttp_log.send();
-		}
-		else if(this.readyState == 4 && this.status != 200){
-			table.innerHTML = "<tr><td>Ledger Load Error . Try Refreshing</td></tr>";
-		} 			
-	  };
+	xhttp_ledger.onreadystatechange = ajaxTableSetup;
 	xhttp_ledger.open("GET", "4Chan_Bans_Log-Ledger.txt", true);
 	xhttp_ledger.send();
+}
+
+function ajaxTableSetup(){
+	if (this.readyState == 4 && this.status == 200) {
+		var all_data = this.responseText.split("\n");
+		//read the total entries in file
+		max_counter = all_data[0];
+		//set the first file which is also the highest numbered.
+		if(!init) {current_page = max_page = all_data[1]}
+		else {current_page = current_page}
+		//load the log data
+		var xhttp_log = new XMLHttpRequest();
+		xhttp_log.onreadystatechange = function(){		
+			table = document.getElementById("bansTable");
+			count = document.getElementById("count");
+			if (this.readyState == 4 && this.status == 200) {
+				while(table.hasChildNodes()) table.removeChild(table.lastChild);
+
+				global_JSON_Data = this.responseText;
+				global_JSON_Data = global_JSON_Data.split("\n");
+				constructTable();
+				buildPages();
+				
+				init = true;
+			}
+			else if(this.readyState == 4 && this.status != 200){				
+				table.innerHTML = "<tr><td>Page Load Error. Try Changing Pages</td></tr>";
+			}
+		}
+		xhttp_log.open("GET", "Logs/4Chan_Bans_Log-Reverse_Chrono-" + current_page + ".txt", true);
+		xhttp_log.send();
+	}
+	else if(this.readyState == 4 && this.status != 200){
+		table.innerHTML = "<tr><td>Ledger Load Error . Try Refreshing</td></tr>";
+	} 			
 }
 
 function refreshFunction(){
