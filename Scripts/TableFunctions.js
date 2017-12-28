@@ -66,7 +66,7 @@ function ajaxTableSetup(){
 				table.innerHTML = "<tr><td>Page Load Error. Try Changing Pages</td></tr>";
 			}
 		}
-		xhttp_log.open("GET", "Logs/4Chan_Bans_Log-Reverse_Chrono-" + current_page + ".txt", true);
+		xhttp_log.open("GET", "Logs/4Chan_Bans_Log-Reverse_Chrono-" + current_page + ".json", true);
 		xhttp_log.send();
 	}
 	else if(this.readyState == 4 && this.status != 200){

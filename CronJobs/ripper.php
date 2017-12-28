@@ -72,30 +72,43 @@ $total_entries = trim($all_ledger_data[0]);
 $page_one_file = trim($all_ledger_data[1]);
 
 //get current file data
-$logStore = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.txt", "r") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
+$logStore = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.json", "r") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
 $log_lines = 0;
 while (!feof($logStore)) {
-	$lines[$log_lines++] = fgets($logStore);
+	$line = fgets($logStore);
+	if($line == "") continue;
+	if($log_lines == 0) {
+		$line = substr($line,1);
+		$line[strpos($line, ",", strlen($line) - 3)] = "";
+	}
+	else if($log_lines == 999)$line[strpos($line, "]", strlen($line) - 3)] = "";
+	else $line[strpos($line, ",", strlen($line) - 3)] = ""; 
+	$line = substr($line,0, strlen($line) - 2);
+	
+	$lines[$log_lines++] =  $line;
+	echo $line . "<br>";
 }
 $line_count = count($lines);
 fclose($logStore);
 		
 //Process JSON and store in current file
 if($line_count <= 1000)
-	$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.txt", "a") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
+	$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.json", "a") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
 else{
 	//move into another file due to excess data
 	$page_one_file++;
-	$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.txt", "w") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
+	$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.json", "w") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
 }
 $new_entries = 0;
 for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	//table row data
 	$logLine = json_encode($rowContents[$json_lines]);
 	
+	echo $logLine . "<br>";
+	
 	$pass = true;
 	foreach($lines as $key => $line){
-		if(strcmp($line, $logLine . "\n") == 0){
+		if(strcmp($line, $logLine) == 0){
 			echo "||++++++++++++||<br>$line<br>FF++++++++++++FF<br>$logLine<br>||++++++++++++||
 				<br>---------------------";
 			$pass = false;
@@ -107,9 +120,16 @@ for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 		if(($line_count + $new_entries) > 1000){
 			fclose($logFile);
 			$page_one_file++;
-			$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.txt", "a") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
+			$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.json", "a") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
 			echo $line_count . " " . $new_entries;
 			$line_count = 0;
+			$logLine = "[" . $logLine . ",";
+		}
+		else if(($line_count + $new_entries) == 999){
+			$logLine = $logLine . "]";
+		}
+		else {
+			$logLine = $logLine . ",";
 		}
 		$new_entries++;
 		fwrite($logFile, $logLine . "\n");	
@@ -117,7 +137,7 @@ for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	echo("<br><br>");		
 }
 	//update ledger
-	$leger_data = fopen("/home4/ecorvid/bans.verniy.xyz/4Chan_Bans_Log-Ledger.txt", "w");
+	$leger_data = fopen("/home4/ecorvid/bans.verniy.xyz/4Chan_Bans_Log-Ledger.json", "w");
 	//update Total
 	fwrite($leger_data, $all_ledger_data[0] + $new_entries . "\n");
 	fwrite($leger_data, $page_one_file . "\n");

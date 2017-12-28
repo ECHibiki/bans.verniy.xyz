@@ -1,0 +1,5 @@
+body{margin:8px;}
+table, tbody, tr, td{border-width:1px;border-style:solid;border-color:black;}
+
+#display_id{display:none}
+#json_listing_id, #rendered_listing_id{width:25%}

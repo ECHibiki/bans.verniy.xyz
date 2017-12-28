@@ -47,7 +47,7 @@ function ledgerFetch(ledger){
 function fetchFileTime(file_number){
 	$.ajax({
         type: 'HEAD',
-        url: 'Logs/4Chan_Bans_Log-Reverse_Chrono-' + file_number + '.txt',
+        url: 'Logs/4Chan_Bans_Log-Reverse_Chrono-' + file_number + '.json',
         complete: function(file) {
 			page_times[file_number] = file.getResponseHeader("last-modified");
 			time_param_set ++;
@@ -79,7 +79,7 @@ function createListingItems(){
 		listing_r.appendChild(a_li_r);
 		var listing_j = document.getElementById("json_listing_id");
 		var a_li_j = document.createElement("A");
-		a_li_j.setAttribute("href", 'Logs/4Chan_Bans_Log-Reverse_Chrono-' + (current_file) + '.txt');
+		a_li_j.setAttribute("href", 'Logs/4Chan_Bans_Log-Reverse_Chrono-' + (current_file) + '.json');
 		a_li_j.innerHTML = "<li>" + page_times[current_file] +"</li>";
 		listing_j.appendChild(a_li_j);
 		current_file--;
