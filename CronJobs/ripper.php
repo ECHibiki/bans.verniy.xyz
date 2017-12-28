@@ -86,7 +86,6 @@ while (!feof($logStore)) {
 	$line = substr($line,0, strlen($line) - 2);
 	
 	$lines[$log_lines++] =  $line;
-	echo $line . "<br>";
 }
 $line_count = count($lines);
 fclose($logStore);
@@ -103,8 +102,6 @@ $new_entries = 0;
 for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	//table row data
 	$logLine = json_encode($rowContents[$json_lines]);
-	
-	echo $logLine . "<br>";
 	
 	$pass = true;
 	foreach($lines as $key => $line){
@@ -137,7 +134,7 @@ for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	echo("<br><br>");		
 }
 	//update ledger
-	$leger_data = fopen("/home4/ecorvid/bans.verniy.xyz/4Chan_Bans_Log-Ledger.json", "w");
+	$leger_data = fopen("/home4/ecorvid/bans.verniy.xyz/4Chan_Bans_Log-Ledger.txt", "w");
 	//update Total
 	fwrite($leger_data, $all_ledger_data[0] + $new_entries . "\n");
 	fwrite($leger_data, $page_one_file . "\n");

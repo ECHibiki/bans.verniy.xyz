@@ -18,7 +18,7 @@
 				$changed_line = substr($changed_line,0, strlen($changed_line) - 1) . ",\n";
 			}
 			$line_count++;
-			array_push($altered_data, $changed_line );
+			array_push($altered_data, $changed_line);
 		}
 		fseek($ready_file,0);
 		foreach($altered_data as $line){

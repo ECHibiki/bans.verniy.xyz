@@ -56,7 +56,13 @@ function ajaxTableSetup(){
 				while(table.hasChildNodes()) table.removeChild(table.lastChild);
 
 				global_JSON_Data = this.responseText;
+				global_JSON_Data = global_JSON_Data.substr(1, );
 				global_JSON_Data = global_JSON_Data.split("\n");
+				var len = global_JSON_Data.length;
+				for(var i = 0 ; i < len ; i++){
+					global_JSON_Data[i] = global_JSON_Data[i].substr(0, global_JSON_Data[i].length - 1);
+				}			
+				
 				constructTable();
 				buildPages();
 				
