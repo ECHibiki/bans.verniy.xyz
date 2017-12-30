@@ -114,7 +114,7 @@ for($json_lines = count($rowContents) - 1 ; $json_lines >= 0  ; $json_lines--){
 	}
 	if($pass){
 		echo("<br><br>XXXXXXXXXXXX<br>" . $logLine . "<br>XXXXXXXXXXXX<br><br>");	
-		if(($line_count + $new_entries) > 1000){
+		if(($line_count + $new_entries) >= 1000){
 			fclose($logFile);
 			$page_one_file++;
 			$logFile = fopen("/home4/ecorvid/bans.verniy.xyz/Logs/4Chan_Bans_Log-Reverse_Chrono-$page_one_file.json", "a") or die ("could not read 4Chan_Bans_Log-Reverse_Chrono-$page_one_file");
