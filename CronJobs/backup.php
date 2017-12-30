@@ -22,7 +22,7 @@ $start_time = microtime(true) * 1000;
 		$curl = curl_init($url);
 		
 		//Authenitcate
-		authenticate("https://api.github.com/user", "verniy-bot", "7df82ecb7dfee0c2c470be87e899c0e3e6ade193", $curl);
+		authenticate("https://api.github.com/user", "verniy-bot", TOKEN, $curl);
 		
 		//Check for appropriate action
 		$status = fileStatus($file_name, $log_contents);
