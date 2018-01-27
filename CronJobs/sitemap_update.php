@@ -43,7 +43,7 @@ $xml_reader->close();
 $dom_sitemap = new DOMDocument;
 $dom_sitemap->load("../sitemap.xml");
 
-$head = $dom_sitemap->getElementsByTagName("urlset")[0];
+$head = $dom_sitemap->getElementsByTagName("urlset")->item(0);
 
 if($write_A){
 	$url = $dom_sitemap->createElement("url");

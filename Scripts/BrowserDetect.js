@@ -2,8 +2,8 @@ var is_ff = false;
 var is_chrome = false;
 
 function detectBrowser(){
-	if(navigator.userAgent.indexOf("FireFox") != -1){
-		is_FF = true;
+	if(navigator.userAgent.indexOf("Firefox") != -1){
+		is_ff = true;
 	}
 	else if (navigator.userAgent.indexOf("Chrome") != -1){
 		is_chrome = true;

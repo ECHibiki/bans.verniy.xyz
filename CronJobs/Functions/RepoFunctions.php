@@ -15,7 +15,7 @@ function authenticate($url, $user, $pass, &$curl){
 //https://stackoverflow.com/questions/36835116/how-to-create-and-update-a-file-in-a-github-repository-with-php-and-github-api
 function createFile(&$curl, $file_name, &$log_position, &$log_contents){
 
-	if($file_name == NULL || strpos($file_name,"backup.php") !== false || strpos($file_name,"RepoFunctions.php") !== false){
+	if($file_name == NULL || strpos($file_name,"backup.php") !== false /*|| strpos($file_name,"RepoFunctions.php") !== false*/){
 		echo " /////// Auto Init $file_name ////";
 		$initialization_message = base64_encode("Automatic-File Initialization/Backup Files obscured");
 	}
@@ -37,11 +37,12 @@ function createFile(&$curl, $file_name, &$log_position, &$log_contents){
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 	
+		
 	$log_position = sizeof($log_contents["File-Name"]);
 }
 //https://stackoverflow.com/questions/19888832/github-api-update-a-file-in-php
 function updateFile(&$curl, $file_name, &$log_position, &$log_contents){
-	if($file_name == NULL || strpos($file_name,"backup.php") !== false || strpos($file_name,"RepoFunctions.php") !== false){
+	if($file_name == NULL || strpos($file_name,"backup.php") !== false /*|| strpos($file_name,"RepoFunctions.php") !== false*/){
 		$update_message = base64_encode("Automatic-File update/Backup.php obscured");
 	}
 	else{
@@ -62,7 +63,40 @@ function updateFile(&$curl, $file_name, &$log_position, &$log_contents){
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 }
 
-function deleteFile(){echo "Delete msg<br>";}
+function updateFileDirect(&$curl, $file_name, &$log_position, &$sha){
+	if($file_name == NULL || strpos($file_name,"backup.php") !== false /*|| strpos($file_name,"RepoFunctions.php") !== false*/){
+		$update_message = base64_encode("Automatic-File update/Backup.php obscured");
+	}
+	else{
+		$update_message = base64_encode(file_get_contents("../" . $file_name));		
+	}
+	$data = 
+		"{
+	  \"message\": \"Update of $file_name\",
+	  \"sha\": \"" . $sha ."\",
+	  \"committer\": {
+		\"name\": \"Verniy-Bot\",
+		\"email\": \"ecverniy.bot69@gmail.com\"
+	  },
+	  \"content\": \"$update_message\"
+	}";
+
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+}
+
+function deleteFile(&$curl, $file_name, &$log_position, &$sha){
+	$data = 
+		"{
+	  \"message\": \"Deletion of $file_name\",
+	  \"sha\": \"" . $sha ."\",
+	  \"committer\": {
+		\"name\": \"Verniy-Bot\",
+		\"email\": \"ecverniy.bot69@gmail.com\"
+	  },
+	}";	
+				
+}
 
 function fileStatus($file_name, &$log_contents){
 	//1. scan for file names

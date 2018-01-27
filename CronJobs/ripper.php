@@ -38,15 +38,16 @@ $rowContents = array();
 $rowDivisions = array(); 
 
 //get JSON
+$json = substr(
+				str_replace("var postPreviews = ", "", $dom->getElementsByTagName('script')->item(1)->nodeValue)
+				, 0, -4);
+$json = json_decode($json, true);
 foreach($table->getElementsByTagName('td') as  $key =>$td){
 	//on hover links get data
 	if($i % 6  == 3){
 		//data-pid is an attribute attatched to links on the 4chan ban page to direct them to the JSON representation of bans from the script tag
-		$jsonID = $td->firstChild->getAttribute('data-pid');
-		$json = substr(
-					str_replace("var postPreviews = ", "", $dom->getElementsByTagName('script')->item(1)->nodeValue)
-					, 0, -4);
-		$json = json_decode($json, true);
+		$jsonID = $td->firstChild->getAttribute('data-pid');	
+		echo $jsonID . "<br/>";
 		$json[$jsonID]["action"] = $td->previousSibling->previousSibling->previousSibling->previousSibling->nodeValue;
 		$json[$jsonID]["length"] = $td->previousSibling->previousSibling->nodeValue;
 		$json[$jsonID]["reason"] = $td->nextSibling->nextSibling->nodeValue;

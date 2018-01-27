@@ -34,8 +34,8 @@ function ledgerFetch(ledger){
 		var page_max = parseInt(top_page)+1;		
 		current_file = top_page;		
 		
-		display_para_interval = setInterval(alterDisplayParagraph);
-		listing_interval = setInterval(createListingItems);
+		display_para_interval = setInterval(alterDisplayParagraph, 16);
+		listing_interval = setInterval(createListingItems, 16);
 		
 		for(var file = 0 ; file < page_max; file++){
 			fetchFileTime(file);
@@ -73,15 +73,15 @@ function unsetIntervals(){
 function createListingItems(){
 	if(page_times[current_file] !== undefined){
 		var listing_r = document.getElementById("rendered_listing_id");
-		var a_li_r = document.createElement("A");
-		a_li_r.setAttribute("href", 'Logs/paged_log.php#' + (top_page - current_file + 1));
-		a_li_r.innerHTML = "<li>" + page_times[current_file] +"</li>"
-		listing_r.appendChild(a_li_r);
+		var li_r = document.createElement("LI");
+		li_r.innerHTML = "<a href='pages?file=" + ((top_page - current_file) + 1) + "'>" + page_times[current_file] +"</a>";
+
+		listing_r.appendChild(li_r);
+		
 		var listing_j = document.getElementById("json_listing_id");
-		var a_li_j = document.createElement("A");
-		a_li_j.setAttribute("href", 'Logs/4Chan_Bans_Log-Reverse_Chrono-' + (current_file) + '.json');
-		a_li_j.innerHTML = "<li>" + page_times[current_file] +"</li>";
-		listing_j.appendChild(a_li_j);
+		var li_j = document.createElement("LI");
+		li_j.innerHTML = "<a href=' Logs/4Chan_Bans_Log-Reverse_Chrono-" + (current_file) + ".json'>" + page_times[current_file] +"</a>";
+		listing_j.appendChild(li_j);
 		current_file--;
 	}
 	if(current_file < 0 && display_changed){ 

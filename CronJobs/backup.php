@@ -13,16 +13,18 @@ $start_time = microtime(true) * 1000;
 	$directory_hunt = new RecursiveDirectoryIterator("../", RecursiveDirectoryIterator::SKIP_DOTS);
 	$iterator = new RecursiveIteratorIterator($directory_hunt);
 
+	$rollback_files = Array();
 	foreach($iterator as $file_name){
 
-				echo "$file_name<br>";		
 		//set url to send to
 		$file_name = substr($file_name, 3);
+		echo "$file_name<br>";
+	
 		$url = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/$file_name";
 		$curl = curl_init($url);
 		
 		//Authenitcate
-		authenticate("https://api.github.com/user", "verniy-bot", TOKEN, $curl);
+		authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);
 		
 		//Check for appropriate action
 		$status = fileStatus($file_name, $log_contents);
@@ -34,8 +36,8 @@ $start_time = microtime(true) * 1000;
 			echo"Create - $url ";
 		}
 		//in log, needs update 		
-		else if($status[0] == 1){
-			if($file_name == NULL || strpos($file_name,"backup.php") !== false || strpos($file_name,"RepoFunctions.php") !== false){
+		else if($status[0] == 1) {
+			if($file_name == NULL || strpos($file_name,"backup.php") !== false /*|| strpos($file_name,"RepoFunctions.php") !== false*/){
 				$log_contents["Seen"][$status[1]] = 1;	
 				echo"Ignored - $url <br/><br/>";
 				continue;
@@ -51,7 +53,11 @@ $start_time = microtime(true) * 1000;
 				
 			continue;
 		}
-		
+		else{
+			echo"Unspecified Error<br/><br/>";			
+			$log_contents["Seen"][$status[1]] = 1;	
+			continue;
+		}
 		$response_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$response = curl_exec($curl);
 		curl_close($curl);
@@ -64,16 +70,56 @@ $start_time = microtime(true) * 1000;
 		$log_contents["Seen"][$status[1]] = 1;	
 				
 		$code = substr($response, 8, 38);
-		if(strpos($code, "4") == false){
+		if(strpos($code, "4") === false){
 			echo " == " . substr($response, 8, 38) . "<br/><br/>"; 
+			array_push($rollback_files, $file_name);
 		}
 		else{
-			echo "<br><br>" . $response . "<br/><br/>"; 
-			unset($log_contents["File-Name"][$status[1]]);	
-			unset($log_contents["Recorded-Last-Update"][$status[1]]);	
-			unset($log_contents["Sha"][$status[1]]);	
-			unset($log_contents["Seen"][$status[1]]);	
-			continue;
+			$fail = true;
+			if(strpos($code, "422") !== false || strpos($code, "409") !== false){
+				$file_loc = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/$file_name";
+				echo $file_loc;
+				$ch = curl_init($file_loc);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch,CURLOPT_USERAGENT, "Banlog-updater");
+				$sha = json_decode(curl_exec($ch), true)["sha"];
+				
+				echo "$file_name - $code RETRY";
+				$url = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/$file_name";
+				$curl = curl_init($url);
+				
+				//Authenitcate
+				authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);		
+				//update on retry
+				updateFileDirect($curl, $file_name, $status[1], $sha);
+											
+				$response_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+				$response = curl_exec($curl);
+				curl_close($curl);
+				
+				$sha = json_decode(substr($response, strpos($response, "{\"content\":")), true)["content"]["sha"];
+				
+				$log_contents["File-Name"][$status[1]]  = $file_name;	
+				$log_contents["Recorded-Last-Update"][$status[1]] =  time();
+				$log_contents["Sha"][$status[1]] = $sha;
+				$log_contents["Seen"][$status[1]] = 1;	
+						
+				$code = substr($response, 8, 38);
+				if(strpos($code, "4") === false){
+					echo " == " . substr($response, 8, 38) . "<br/><br/>"; 
+					$fail = false;
+				}
+				else $fail = true;
+			}
+			if($fail){
+				if(strpos($code, "409") !== false) echo "///Too Large To Fetch?";
+				else if(strpos($code, "400") !== false) echo "///Filename error";
+				echo "<br><br>" . $response . "<br/><br/>"; 
+				unset($log_contents["File-Name"][$status[1]]);	
+				unset($log_contents["Recorded-Last-Update"][$status[1]]);	
+				unset($log_contents["Sha"][$status[1]]);	
+				unset($log_contents["Seen"][$status[1]]);	
+			}
 		}
 	}
 	
@@ -84,12 +130,36 @@ $start_time = microtime(true) * 1000;
 		foreach($log_contents["Seen"] as &$seen){
 			if($seen == 1)
 				$seen = 0;
-			else 
-				deleteFile();
+			else{ 
+				$file_name = $log_contents["File-Name"][$index_counter];
+							
+				echo "<br><br>Deleting $file_name";
+				
+				$url = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/" . $file_name;
+				$curl = curl_init($url);		
+				//Authenitcate
+				authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);
+				//attempt to remove file if it exists
+				deleteFile($curl, $file_name, $index_counter, $log_contents["Sha"][$index_counter]);
+				$data =  curl_exec($curl);
+				
+				// //then remove from log
+				unset($log_contents["File-Name"][$index_counter]);	
+				unset($log_contents["Recorded-Last-Update"][$index_counter]);	
+				unset($log_contents["Sha"][$index_counter]);	
+				unset($log_contents["Seen"][$index_counter]);	
+				
+				echo "==" .  substr($data, 8, 38);
+			}
 			$index_counter++;
 		}
 		echo "<br>" ;
 		var_dump($log_contents);
+		
+		$log_contents["File-Name"]  = array_values($log_contents["File-Name"]);	
+		$log_contents["Recorded-Last-Update"] = array_values($log_contents["Recorded-Last-Update"]);
+		$log_contents["Sha"] =  array_values($log_contents["Sha"]);
+		$log_contents["Seen"] = array_values($log_contents["Seen"]);
 		
 		$log = fopen(__DIR__ . "/FileLog.json", "w");
 		fwrite($log, json_encode($log_contents));

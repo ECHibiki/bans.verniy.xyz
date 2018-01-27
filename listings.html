@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Simple 4Chan Ban Log - Listings</title>
+	<base href = "http://bans.verniy.xyz">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="../Scripts/BrowserDetect.js?2"></script>
+	<script src="../Scripts/LogListingFunctions.js?6"></script>
+	<script>
+			window.onload = function(){
+			detectBrowser();
+			setNodeHref(document.getElementById("json_view_id"), 
+			"https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en",
+			"https://addons.mozilla.org/en-US/firefox/addon/jsonview/",
+			"https://jsonview.com/");
+			beginAJAXCalls();
+		}
+	</script>
+	<link rel="stylesheet" href="../Scripts/IndexStyle.css" type="text/css">
+	</head>
+	<body itemscope="" itemtype="http://schema.org/DataCatalog">
+	<div>
+		<meta itemprop="url" content="http://bans.verniy.xyz/listings">
+		<a href = "index">Back to Home Page Listings</a>
+	</div>
+	<div>
+		<h1 itemprop="name">JSON Page Listings</h1>
+		<meta itemprop="keywords" content="4chan,bans,logger,shitposter,GR3,ban evasion,/a/,/c/,/h/,/d/,/e/">
+		<meta itemprop="version" content="Jan-03" id="versionInfo"/>
+		<p id="display_id"> 
+			Displaying # results of $ pages from % to ^.
+		</p>
+		<p itemprop="description">	The ban log is polled every 15 minutes to check for the most recent bans on 4chan's ban page. These are added to the most current file and displayed on this site.
+		This page contains both the raw JSON listings and rendered table data of the listings below while the previous page is a tabular format that's easy to interact with throught AJAX and JavaScript page manipulation.
+		<br/>See <strong><a href="/Logs">/Logs/</a></strong> for non-Ajax version of page JSON and Paged listings.
+		<br/>See <strong><a href="/index">/index</a></strong> for Ajax Pages.
+		</p>
+		Github repository: <a href="https://github.com/ECHibiki/bans.verniy.xyz" itemprop="sameAs">https://github.com/ECHibiki/bans.verniy.xyz</a><br/>
+		Backup repository: <a href="https://github.com/ECHibiki/Backup_bans.verniy.xyz/" itemprop="sameAs">https://github.com/ECHibiki/Backup_bans.verniy.xyz/</a><br/>
+		Bans logged from: <a href="https://www.4chan.org/bans" itemprop="sameAs">https://www.4chan.org/bans</a><br/>
+	</div>
+	<div id="listings_container" itemscope='' itemtype='http://schema.org/DataSet'>
+		<div id ="paged_container">
+			<div id="paged_text_container">
+				<h2>Paged Listings</h2>
+				<p>PHP/Paged version of the listings for those who don't enjoy JavaScript<br/></p>
+			</div>
+			<div id="paged_list_container">
+				<ol id="rendered_listing_id"></ol>
+			</div>
+		</div>
+		<div id ="json_container">
+			<div id="json_text_container">
+				<h2>JSON Listings</h2>
+				<p>Please consider using a JSON viewer such as <a id="json_view_id" href="">JSONView</a> to properly read the JSON listings. 
+				Take note, first entry is not JSON readable as of yet since it's being added to every 15 minutes. Please use the home page for that.</p>
+			</div>
+			<div id="json_list_container">
+				<ol id="json_listing_id"></ol>	
+			</div>
+		</div>
+	</div>
+	<div itemprop="about" style="display:none">
+	<p>
+		<span itemprop="accountablePerson">Verniy 2017</span>: Last Updated <span itemprop="dateModified">03/1/2018</span><br/>
+		<meta itemprop="author" content="ECHibiki">
+		Metadata & CSS<br/>
+		Inquiries to be sent to the gmail account of ECVerniy
+	</p>
+</div>
+	</body>
+</html>
