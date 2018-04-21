@@ -14,7 +14,7 @@
 echo "
 <div>
 	<meta itemprop='url' content=\"/pages?file=" . $_GET['file'] . "\"/>
-		<a href = '/listings'>Back to Log Listings</a>
+		<a href = '/listings'>Back to Home Listings</a>
 ";
 
 $ledger = fopen("4Chan_Bans_Log-Ledger.txt", "r");
@@ -40,19 +40,20 @@ $offset = 6;
 $file_get = $_GET["file"] - $offset;
 if($file_get < 0) $file_get = 0;
 
+$font_size = "18px";
 for($i = $file_get ; $i <  $file_count + 1 ; $i++){
-		if($i == $_GET["file"] - 1) echo "<td><a style='color:red' href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
+		if($i == $_GET["file"] - 1) echo "<td><a style='font-size:$font_size;color:red' href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
 		else if((ceil(($file_count + 1) / 2) + $file_get) < $file_count - 2 && $i == 10 + $file_get){
-			echo "<td><a href='/pages?file=" . (ceil(($file_count + 1) / 2) + $file_get) ."'>". (ceil(($file_count + 1) / 2) + $file_get) . "</a></td>";
+			echo "<td><a style='font-size:$font_size;' href='/pages?file=" . (ceil(($file_count + 1) / 2) + $file_get) ."'>". (ceil(($file_count + 1) / 2) + $file_get) . "</a></td>";
 		}
 		else if($i == $file_count){
-			echo "<td><a href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
+			echo "<td><a style='font-size:$font_size;' href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
 		}
 		else if($i == 11 + $file_get || $i == 9 + $file_get){
-			echo "<td>...</td>";
+			echo "<td style='font-size:$font_size'>...</td>";
 		}
 		else if($i < 11 + $file_get){
-			echo "<td><a href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
+			echo "<td><a style='font-size:$font_size;' href='/pages?file=" . ($i + 1) ."'>". ($i + 1) . "</a></td>";
 		}
 }
 echo "</table> </div>";
@@ -69,7 +70,7 @@ echo "
 		Total entries: $entry_count
 		</p>
 </div>";
-
+echo "<a href='/index'>View the Dynamic Listings</a><br/>";
 
 echo "<div itemprop='dataset' itemscope='' itemtype='http://schema.org/DataSet'>
 			<a href = 'pages?file=" . $low . "' itemprop='url'>Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href = 'pages?file=" . $high ."' itemprop='url'>Next</a><br/>

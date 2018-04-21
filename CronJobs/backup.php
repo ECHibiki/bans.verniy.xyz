@@ -2,6 +2,8 @@
 //Pushes files to github via bot. 
 //stores at https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz 
 $start_time = microtime(true) * 1000;
+$token = "b93d1f7651e5a35cd9b6e3565254b364efe7a2ca";
+
 
 	include("Functions/RepoFunctions.php");
 		
@@ -24,7 +26,7 @@ $start_time = microtime(true) * 1000;
 		$curl = curl_init($url);
 		
 		//Authenitcate
-		authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);
+		authenticate("https://api.github.com/user", "verniy-bot", $token, $curl);
 		
 		//Check for appropriate action
 		$status = fileStatus($file_name, $log_contents);
@@ -80,16 +82,21 @@ $start_time = microtime(true) * 1000;
 				$file_loc = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/$file_name";
 				echo $file_loc;
 				$ch = curl_init($file_loc);
+				authenticate("https://api.github.com/user", "verniy-bot", $token, $ch);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch,CURLOPT_USERAGENT, "Banlog-updater");
-				$sha = json_decode(curl_exec($ch), true)["sha"];
+				$result = curl_exec($ch);
+				$result = substr($result, strpos($result, '{'));
+				echo"+=+=+=";
+				echo($result);
+				$sha = json_decode($result, true)["sha"];
 				
-				echo "$file_name - $code RETRY";
+				echo "||||||$file_name - $code RETRY::::Sha $sha||||||||";
 				$url = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/$file_name";
 				$curl = curl_init($url);
 				
 				//Authenitcate
-				authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);		
+				authenticate("https://api.github.com/user", "verniy-bot", $token, $curl);		
 				//update on retry
 				updateFileDirect($curl, $file_name, $status[1], $sha);
 											
@@ -138,7 +145,7 @@ $start_time = microtime(true) * 1000;
 				$url = "https://api.github.com/repos/ECHibiki/Backup_bans.verniy.xyz/contents/" . $file_name;
 				$curl = curl_init($url);		
 				//Authenitcate
-				authenticate("https://api.github.com/user", "verniy-bot", "fba5cf2db1b47f4feef884b1b2894e37352d9682", $curl);
+				authenticate("https://api.github.com/user", "verniy-bot", $token, $curl);
 				//attempt to remove file if it exists
 				deleteFile($curl, $file_name, $index_counter, $log_contents["Sha"][$index_counter]);
 				$data =  curl_exec($curl);

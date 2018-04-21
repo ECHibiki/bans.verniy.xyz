@@ -42,8 +42,8 @@ function createFile(&$curl, $file_name, &$log_position, &$log_contents){
 }
 //https://stackoverflow.com/questions/19888832/github-api-update-a-file-in-php
 function updateFile(&$curl, $file_name, &$log_position, &$log_contents){
-	if($file_name == NULL || strpos($file_name,"backup.php") !== false /*|| strpos($file_name,"RepoFunctions.php") !== false*/){
-		$update_message = base64_encode("Automatic-File update/Backup.php obscured");
+	if($file_name == NULL /*|| strpos($file_name,"backup.php") !== false || strpos($file_name,"RepoFunctions.php") !== false*/){
+		$update_message = base64_encode("Automatic-File update");
 	}
 	else{
 		$update_message = base64_encode(file_get_contents("../" . $file_name));		

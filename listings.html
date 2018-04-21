@@ -2,7 +2,7 @@
 <html>
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Simple 4Chan Ban Log - Listings</title>
+	<title>Simple 4Chan Ban Log - Listings Home Page</title>
 	<base href = "http://bans.verniy.xyz">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="../Scripts/BrowserDetect.js?2"></script>
@@ -22,19 +22,19 @@
 	<body itemscope="" itemtype="http://schema.org/DataCatalog">
 	<div>
 		<meta itemprop="url" content="http://bans.verniy.xyz/listings">
-		<a href = "index">Back to Home Page Listings</a>
-	</div>
-	<div>
-		<h1 itemprop="name">JSON Page Listings</h1>
+		<h1 itemprop="name">Ban Listings Home Page</h1>
+
 		<meta itemprop="keywords" content="4chan,bans,logger,shitposter,GR3,ban evasion,/a/,/c/,/h/,/d/,/e/">
 		<meta itemprop="version" content="Jan-03" id="versionInfo"/>
+		<strong><a href = "index" style="font-size:25px">View Ban Listings</a></strong>
 		<p id="display_id"> 
 			Displaying # results of $ pages from % to ^.
 		</p>
 		<p itemprop="description">	The ban log is polled every 15 minutes to check for the most recent bans on 4chan's ban page. These are added to the most current file and displayed on this site.
 		This page contains both the raw JSON listings and rendered table data of the listings below while the previous page is a tabular format that's easy to interact with throught AJAX and JavaScript page manipulation.
-		<br/>See <strong><a href="/Logs">/Logs/</a></strong> for non-Ajax version of page JSON and Paged listings.
-		<br/>See <strong><a href="/index">/index</a></strong> for Ajax Pages.
+		<h2>Navigate</h2>See 
+		<strong><a href="/index">/index</a></strong> for Javascript pages.<br/>
+		See <strong><a href="/pages?file=1">/pages</a></strong> for non-Javascript version.
 		</p>
 		Github repository: <a href="https://github.com/ECHibiki/bans.verniy.xyz" itemprop="sameAs">https://github.com/ECHibiki/bans.verniy.xyz</a><br/>
 		Backup repository: <a href="https://github.com/ECHibiki/Backup_bans.verniy.xyz/" itemprop="sameAs">https://github.com/ECHibiki/Backup_bans.verniy.xyz/</a><br/>
