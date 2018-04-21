@@ -1,3 +1,4 @@
+Developement on this project has stopped and been moved to https://github.com/ECHibiki/Bans.Verniy.xyz-Modern
 # 4Chan Ban Logger V1.0
 Release Version of website Bans.Verniy.xyz
 Uses hostgator cronjobs to pull access 4chan's ban page and from the script tag which generates 4chan's page, pulls the JSON and stores it in files in the /Logs/ directory.
